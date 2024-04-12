@@ -1,0 +1,42 @@
+From 5d5f5cec18a7d7961c6b4ea3c0111f846edb05eb Mon Sep 17 00:00:00 2001
+From: Roger Zanoni <rzanoni@igalia.com>
+Date: Thu, 28 Mar 2024 18:16:08 -0300
+Subject: [PATCH 2/3] Fix wayland ozone build
+
+DidCompleteSwapWithNewSize should only be defined for the X11 build
+
+Signed-off-by: Roger Zanoni <rzanoni@igalia.com>
+---
+ libcef/browser/osr/host_display_client_osr.cc | 2 +-
+ libcef/browser/osr/host_display_client_osr.h  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libcef/browser/osr/host_display_client_osr.cc b/libcef/browser/osr/host_display_client_osr.cc
+index b1aa583fe..14ff696c8 100644
+--- a/libcef/browser/osr/host_display_client_osr.cc
++++ b/libcef/browser/osr/host_display_client_osr.cc
+@@ -145,7 +145,7 @@ void CefHostDisplayClientOSR::CreateLayeredWindowUpdater(
+   layered_window_updater_->SetActive(active_);
+ }
+ 
+-#if BUILDFLAG(IS_LINUX)
++#if BUILDFLAG(IS_LINUX) && BUILDFLAG(IS_OZONE_X11)
+ void CefHostDisplayClientOSR::DidCompleteSwapWithNewSize(
+     const gfx::Size& size) {}
+ #endif
+diff --git a/libcef/browser/osr/host_display_client_osr.h b/libcef/browser/osr/host_display_client_osr.h
+index c0987f8d1..5ec600b93 100644
+--- a/libcef/browser/osr/host_display_client_osr.h
++++ b/libcef/browser/osr/host_display_client_osr.h
+@@ -37,7 +37,7 @@ class CefHostDisplayClientOSR : public viz::HostDisplayClient {
+       mojo::PendingReceiver<viz::mojom::LayeredWindowUpdater> receiver)
+       override;
+ 
+-#if BUILDFLAG(IS_LINUX)
++#if BUILDFLAG(IS_LINUX) && BUILDFLAG(IS_OZONE_X11)
+   void DidCompleteSwapWithNewSize(const gfx::Size& size) override;
+ #endif
+ 
+-- 
+2.44.0
+

@@ -1,0 +1,25 @@
+From 65788cb7da41e3266ea08d28349ac1dcb489aee3 Mon Sep 17 00:00:00 2001
+From: Roger Zanoni <rzanoni@igalia.com>
+Date: Wed, 10 Apr 2024 11:29:21 -0300
+Subject: [PATCH 3/3] Remove X11 from the list of standard libs
+
+Signed-off-by: Roger Zanoni <rzanoni@igalia.com>
+---
+ cmake/cef_variables.cmake.in | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/cmake/cef_variables.cmake.in b/cmake/cef_variables.cmake.in
+index 9f10f1d9f..05aba267b 100644
+--- a/cmake/cef_variables.cmake.in
++++ b/cmake/cef_variables.cmake.in
+@@ -199,7 +199,6 @@ if(OS_LINUX)
+ 
+   # Standard libraries.
+   set(CEF_STANDARD_LIBS
+-    X11
+     )
+ 
+   # CEF directory paths.
+-- 
+2.44.0
+
